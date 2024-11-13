@@ -1,0 +1,63 @@
+{% extends "findme/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    .centered-form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Full viewport height */
+    }
+
+    .centered-form-box {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+    }
+
+    .centered-form-box legend {
+        color: black;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .centered-form-box .btn-outline-danger {
+        width: 100%;
+    }
+
+    .centered-form-box .border-top {
+        margin-top: 1.5rem;
+        text-align: center;
+    }
+
+    .centered-form-box a {
+        color: black;
+        text-decoration: underline;
+    }
+
+    .centered-form-box a:hover {
+        text-decoration: none;
+    }
+</style>
+
+<div class="centered-form-container">
+    <div class="centered-form-box">
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Log In</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <br><button class="btn btn-outline-danger" type="submit">Login</button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">Need An Account? <a href="{% url 'register' %}">Sign Up Now</a></small>
+        </div>
+    </div>
+</div>
+{% endblock content %}

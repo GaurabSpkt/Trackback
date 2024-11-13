@@ -1,0 +1,40 @@
+{% extends "findme/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="form-wrapper">
+        <h1>Contact Us</h1>
+        <form id="contact-form" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+        <div id="response-message"></div>
+    </div>
+</div>
+
+<!-- Link to the external JavaScript file -->
+<script src="{% static 'findme/scripts.js' %}"></script>
+
+<style>
+/* Center the form-wrapper */
+.form-wrapper {
+    max-width: 600px; /* Adjust as needed */
+    margin: 0 auto; /* Center horizontally */
+    padding: 20px; /* Add some padding for spacing */
+    border: 1px solid #ddd; /* Optional: Add a border for visual separation */
+    border-radius: 8px; /* Optional: Add rounded corners */
+    background-color: #f9f9f9; /* Optional: Background color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visual appeal */
+}
+
+.container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically if the container's height is greater than the content */
+    min-height: 100vh; /* Make sure the container takes up at least the full viewport height */
+    padding: 20px; /* Optional: Add padding to the container */
+}
+</style>
+{% endblock %}

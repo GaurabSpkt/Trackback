@@ -1,0 +1,143 @@
+{% extends "findme/base.html" %}
+{% block content %}
+<style>
+    :root {
+        --surface-color: #0b0c10;
+        --curve: 40;
+        --black-color: #45a29e;
+        --text-color: rgb(188, 212, 209);
+    }
+
+    .cards {
+        display: grid;
+        gap: 2rem;
+        margin: 4rem 5vw;
+        list-style: none;
+    }
+
+    .card {
+        position: relative;
+        display: block;
+        border-radius: calc(var(--curve)*1px);
+        overflow: hidden;
+        text-decoration: none;
+    }
+
+    .picture {
+        width: 100%;
+        height: auto;
+    }
+
+    .card__overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        border-radius: calc(var(--curve)*1px);
+        background: var(--surface-color);
+        transform: translateY(100%);
+        transition: 0.2s ease-in-out;
+    }
+
+    .card:hover .card__overlay {
+        transform: translateY(0);
+    }
+
+    .card__header {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        background-color: var(--surface-color);
+        padding: 2em;
+        transition: 0.2s ease-in-out;
+    }
+
+    .card__arc {
+        width: 5em;
+        height: 5em;
+        position: absolute;
+        bottom: 100%;
+        right: 0;
+    }
+
+    .card__arc path {
+        fill: rgb(166, 30, 15);
+    }
+
+    .card__arc__found path {
+        fill: rgb(15, 155, 57);
+    }
+
+    .card__thumb {
+        width: 3.125em;
+        height: 3.125em;
+        border-radius: 50%;
+    }
+
+    .card__title {
+        font-size: 1em;
+        color: var(--black-color);
+    }
+
+    .card__status, .card__description {
+        font-size: 0.8em;
+        color: var(--text-color);
+    }
+
+    .parent {
+        display: grid;
+        grid-template-columns: 2fr repeat(3, 1fr) 2fr;
+    }
+
+    .divcenter {
+        grid-column: 2 / 5;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="parent">
+                <div class="divcenter">
+                    <ul class="cards">
+                        <li>
+                            <a href="#" class="card">
+                                <img src="{{ object.image.url }}" alt="" class="picture">
+                                <div class="card__overlay">
+                                    <div class="card__header" style="background-color: {% if object.found %} rgb(15, 155, 57, 0.8) {% else %} rgb(166, 30, 15) {% endif %};">
+                                        <svg class="card__arc{% if object.found %}__found{% endif %}" xmlns="http://www.w3.org/2000/svg">
+                                            <path />
+                                        </svg>
+                                        <img src="{{ object.name.profile.image.url }}" class="card__thumb">
+                                        <div class="card__header-text">
+                                            <h3 class="card__title">{{ object.title }}</h3>
+                                            <span class="card__status">{{ object.lost_date|date:"d F, Y" }}</span>
+                                        </div>
+                                    </div>
+
+                                    <p class="card__description">{{ object.description }}</p>
+                                    <p class="card__description" style="color:honeydew">{{ object.found|yesno:"Found at,Lost at" }} {{ object.location }} by {{ object.name }}</p>
+                                    {% if object.found %}
+                                    <p class="card__description" style="color:honeydew">Found at {{ object.location }} by {{ object.name }}</p>
+                                    {% else %}
+                                    <form method="post" action="{% url 'found' object.ItemID %}" autocomplete="off" style="margin-left: 30px;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="item" value="{{ object.pk }}" />
+                                        <input type="text" name="location" placeholder="location" required />
+                                        <button type="submit" class="btn btn-outline-success" name="found" value="found">Found It!</button>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                            </a>
+                            <div>
+                                <a class="btn btn-primary mt-1 mb-1" href="{% url 'findme-home' %}">Back to Home</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

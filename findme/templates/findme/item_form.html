@@ -1,0 +1,153 @@
+{% extends "findme/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+<style>
+    body {
+        background-color: #f8f9fa; /* Light background color for the body */
+    }
+
+    h1 {
+        text-align: center; /* Center align the heading */
+        color: #110f0f; /* Dark color for the heading */
+        margin-bottom: 20px; /* Space below the heading */
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+        border-radius: 8px; /* Rounded corners for the form container */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        padding: 2rem; /* Padding inside the form container */
+        max-width: 800px; /* Maximum width for the form container */
+        margin: auto; /* Center horizontally */
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem; /* Space between form fields */
+    }
+
+    .form-group label {
+        display: block; /* Block display for labels */
+        margin-bottom: 0.5rem; /* Space below the label */
+        color: #495057; /* Darker text color for labels */
+        font-weight: 500; /* Semi-bold text */
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100%; /* Full width */
+        padding: 0.75rem; /* Padding inside inputs */
+        border: 1px solid #ced4da; /* Light border color */
+        border-radius: 4px; /* Rounded corners */
+        font-size: 1rem; /* Font size for text */
+        box-sizing: border-box; /* Include padding in width */
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        border-color: #007bff; /* Highlight border color */
+        outline: none; /* Remove default outline */
+        box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25); /* Light shadow on focus */
+    }
+
+    .form-group .error {
+        color: #dc3545; /* Red color for errors */
+        font-size: 0.875rem; /* Slightly smaller font size for error messages */
+    }
+
+    .btn-outline-success {
+        padding: 0.75rem 1.5rem; /* Padding inside the button */
+        font-size: 1rem; /* Font size for the button */
+        font-weight: 500; /* Semi-bold text */
+        border-radius: 4px; /* Rounded corners for the button */
+        border: 1px solid #28a745; /* Border color */
+        color: #28a745; /* Text color */
+        background-color: transparent; /* Transparent background */
+        transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+    }
+
+    .btn-outline-success:hover {
+        background-color: #28a745; /* Background color on hover */
+        color: #ffffff; /* Text color on hover */
+    }
+
+    .btn-outline-success:focus {
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5); /* Shadow on focus */
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .container {
+            padding: 1rem; /* Reduce padding on smaller screens */
+        }
+    }
+    .form-group input[type="checkbox"] {
+    width: auto; /* Auto width for checkbox */
+    margin-right: 0.5rem; /* Space between checkbox and label */
+}
+
+/* Style for checkbox labels */
+.form-group label.checkbox-label {
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Center vertically */
+    font-size: 1rem; /* Font size for the label */
+}
+</style>
+
+<h1>Item Details</h1>
+
+<div style="background: rgb(255,255,255,0.8);" class="container">
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Item Name -->
+        <div class="form-group">
+            {{ form.title|as_crispy_field }}
+            <span style="color: red;">{{ form.title.errors }}</span>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+            {{ form.description|as_crispy_field }}
+            <span style="color: red;">{{ form.description.errors }}</span>
+        </div>
+
+        <!-- Contact Number -->
+        <div class="form-group">
+            {{ form.phone_number|as_crispy_field }}
+            <span style="color: red;">{{ form.phone_number.errors }}</span>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            {{ form.email|as_crispy_field }}
+            <span style="color: red;">{{ form.email.errors }}</span>
+        </div>
+
+        <!-- Location -->
+        <div class="form-group">
+            {{ form.location|as_crispy_field }}
+            <span style="color: red;">{{ form.location.errors }}</span>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="form-group">
+            {{ form.image|as_crispy_field }}
+            <span style="color: red;">{{ form.image.errors }}</span>
+        </div>
+
+        <!-- Found Checkbox -->
+        <div class="form-group">
+            {{ form.found|as_crispy_field }}
+            <span style="color: red;">{{ form.found.errors }}</span>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Post Item</button>
+        
+    </form>
+</div>
+
+{% endblock %}
